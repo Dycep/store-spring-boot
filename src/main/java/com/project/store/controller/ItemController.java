@@ -7,59 +7,41 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
-@Controller
+
+@RestController
 @RequestMapping(path = "/item")
 @AllArgsConstructor
 public class ItemController {
 
     private final ItemService itemService;
 
-
     @GetMapping()
-    public String showAllItems(@ModelAttribute("items") Item items){
-        itemService.getAllItems();
-        return "index";
+    public List<Item> showAllItems(){
+        return itemService.getAllItems();
     }
 
     @GetMapping("/{id}")
-    public String showItem(@PathVariable Long id, @ModelAttribute("item") Item item){
-        itemService.getItem(id);
-        return "show_item";
+    public Item showItem(@PathVariable Long id){
+        return itemService.getItem(id);
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Long id, @ModelAttribute("item") Item item){
-        itemService.getItem(id);
-        return "edit_item";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("item") Item item, BindingResult bindingResult){
-        if (bindingResult.hasErrors())
-            return "edit_item";
-        itemService.save(item);
-        return "redirect:/index";
-    }
-
-    @GetMapping("/item_form")
-    public String itemForm(@ModelAttribute("item") Item item){
-        return "item_form";
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestParam(required = false) String name, @RequestParam(required = false) String description, @RequestParam(required = false) BigDecimal price){
+        itemService.updateItem(id, name, description, price);
     }
 
     @PostMapping("/save")
-    public String saveItem(@ModelAttribute("item") Item item, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return "item_form";
-
-        itemService.save(item);
-        return "redirect:/item";
+    public void saveItem(@RequestBody Item item, BindingResult bindingResult){
+        if (!bindingResult.hasErrors())
+            itemService.save(item);
     }
 
-
     @DeleteMapping("/{id}")
-    public String deleteItem(@PathVariable Long id){
+    public void deleteItem(@PathVariable Long id){
         itemService.deleteItemById(id);
-        return "redirect:/item";
     }
 }

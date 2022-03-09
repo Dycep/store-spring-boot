@@ -36,11 +36,10 @@ public class RegistrationService {
                         request.getEmail(),
                         request.getPassword(),
                         request.getPhone(),
-                        UserRole.CUSTOMER,
-                        request.getDob()
+                        UserRole.CUSTOMER
                         )
         );
-        String link="http://localhost:8080/index/registration/confirm?token" + token;
+        String link="http://localhost:8080/registration/confirm?token" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));

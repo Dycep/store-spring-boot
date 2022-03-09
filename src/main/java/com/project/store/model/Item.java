@@ -1,8 +1,6 @@
 package com.project.store.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -20,6 +18,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Item {
 
     @Id
@@ -57,8 +57,6 @@ public class Item {
     )
     private BigDecimal price;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "items")
-    private Set<Cart> carts = new HashSet<>();
 
 
     public Item(String name, String description, BigDecimal price) {
@@ -67,41 +65,6 @@ public class Item {
         this.price = price;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Cart> getCarts() {
-        return carts;
-    }
 
 
     @Override

@@ -31,6 +31,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString(exclude = "password")
 public class User implements UserDetails {
 
     @Id
@@ -66,7 +67,7 @@ public class User implements UserDetails {
     @Column(
             name = "phone",
             nullable = false,
-            length = 9
+            length = 12
     )
     private String phone;
 
@@ -87,11 +88,11 @@ public class User implements UserDetails {
 
     private Boolean locked = false;
     private Boolean enabled = false;
-    @Column(
-            name = "dob",
-            nullable = false
-    )
-    private LocalDate dob;
+//    @Column(
+//            name = "dob",
+//            nullable = false
+//    )
+//    private LocalDate dob;
 
     @Transient
     private Integer age;
@@ -103,24 +104,24 @@ public class User implements UserDetails {
     private Cart cart;
 
 
-    public User(String firstName, String lastName, String email, String password, String phone, UserRole userRole, LocalDate dob) {
+    public User(String firstName, String lastName, String email, String password, String phone, UserRole userRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
         this.phone = phone;
-        this.dob = dob;
+//        this.dob = dob;
     }
 
 
-    public Integer getAge() {
-        return Period.between(this.dob, LocalDate.now()).getYears();
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+//    public Integer getAge() {
+//        return Period.between(this.dob, LocalDate.now()).getYears();
+//    }
+//
+//    public void setAge(Integer age) {
+//        this.age = age;
+//    }
 
 
 

@@ -5,6 +5,8 @@ import com.project.store.registration.token.ConfirmationToken;
 import com.project.store.registration.token.ConfirmationTokenService;
 import com.project.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,7 +36,14 @@ public class UserService implements UserDetailsService {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-
+    public Long getAuthId(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getId();
+    }
+    public String getAuthPhone(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getPhone();
+    }
 
 //    public List<User> getAllUsers(User user){
 //        return userRepository.findAll();
