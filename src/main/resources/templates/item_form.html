@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <meta charset="UTF-8">
+    <title>Item Form</title>
+</head>
+<body>
+<form th:action="@{/item/save}" method="post" th:object="${item}">
+    <label for="firstName">Enter name of item: </label>
+    <input type="text" th:field="*{name}" id="firstName" class="form-control" required minlength="2" maxlength="25" />
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Age error</div>
+    <br/>
+    <label for="description">Enter last name: </label>
+    <input type="text" th:field="*{description}" id="description" class="form-control" required minlength="2" maxlength="25"/>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Age error</div>
+    <br/>
+    <label for="price">Enter price: </label>
+    <input type="number" min="1" step="any" th:field="*{price}" id="price" class="form-control" required minlength="1" maxlength="15"/>
+    <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Age error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>
