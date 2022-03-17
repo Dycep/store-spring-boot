@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Show item</title>
+    <title>Item</title>
 </head>
 <body>
-<p th:text="${'Name:' + item.getName()}">VALUE</p>
-<p th:text="${'Description: ' + item.getDescription()}">VALUE</p>
-<p th:text="${item.getPrice()}">VALUE</p>
-
-<a th:href="@{/item/{id}/edit(id=${item.getId()})}">Edit</a>
-
-<form th:method="DELETE" th:action="@{/item/{id}(id=${item.getId()})}">
-    <input type="submit" value="Delete"/>
+<a th:text="${item.getName()+', '+ item.getPrice()}">item</a>
+<form th:action="@{/item/delete/{id}(id=${item.id})}" th:method="delete" >
+    <button type="submit" class="btn btn-danger">Delete</button>
 </form>
+
 </body>
 </html>

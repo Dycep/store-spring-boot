@@ -12,7 +12,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,43 +23,50 @@ import java.util.Map;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final UserService userService;
-    private final UserRepository userRepository;
     private final ItemService itemService;
     private final CartItemService cartItemService;
+    private ArrayList<Integer> itemIdList;
 
-    public Integer saveCart(CartRequest request){
-        Cart cart = new Cart();
-        cart.setUser(request.getUser());
-        cart.setComment(request.getComment());
-        cartRepository.save(cart);
-        Map<Long, Integer> productIdProductCount = getProductIdProductCountMap(request);
-
-        for (Map.Entry<Long, Integer> entry : productIdProductCount.entrySet()) {
-            Long k = entry.getKey();
-            Integer v = entry.getValue();
-            Item item = itemService.getItem(k);
-            CartItem p = new CartItem();
-            p.setItem(item);
-            p.setAmount(v);
-            p.setCart(cart);
-            cartItemService.save(p);
-        }
-
-        return cart.getId();
+    public void createCart(HttpServletRequest request){
+        itemIdList.add(1);
+        request.getSession().setAttribute("cart", itemIdList);
+        request.getSession().setAttribute("cartItems", itemIdList);
+        System.out.println(request.getSession().getAttribute("cart"));
+        System.out.println(request.getSession().getAttribute("cartItems"));
     }
 
-    private Map<Long, Integer> getProductIdProductCountMap(CartRequest request) {
-        Map<Long, Integer> productIdProductCount = new HashMap<>();
-        for (Item it : request.getItems()) {
-            if (productIdProductCount.containsKey(it.getId())) {
-                Integer productCount = productIdProductCount.get(it.getId());
-                productCount = productCount + 1;
-                productIdProductCount.put(it.getId(), productCount);
-            } else {
-                productIdProductCount.put(it.getId(), 1);
-            }
-        }
-        return productIdProductCount;
-    }
+//    public Integer saveCart(CartRequest request){
+//        Cart cart = new Cart();
+//        cart.setUser(request.getUser());
+//        cart.setComment(request.getComment());
+//        cartRepository.save(cart);
+//        Map<Long, Integer> productIdProductCount = getProductIdProductCountMap(request);
+//
+//        for (Map.Entry<Long, Integer> entry : productIdProductCount.entrySet()) {
+//            Long k = entry.getKey();
+//            Integer v = entry.getValue();
+//            Item item = itemService.getItem(k);
+//            CartItem p = new CartItem();
+//            p.setItem(item);
+//            p.setAmount(v);
+//            p.setCart(cart);
+//            cartItemService.save(p);
+//        }
+//
+//        return cart.getId();
+//    }
+//
+//    private Map<Long, Integer> getProductIdProductCountMap(CartRequest request) {
+//        Map<Long, Integer> productIdProductCount = new HashMap<>();
+//        for (Item it : request.getItems()) {
+//            if (productIdProductCount.containsKey(it.getId())) {
+//                Integer productCount = productIdProductCount.get(it.getId());
+//                productCount = productCount + 1;
+//                productIdProductCount.put(it.getId(), productCount);
+//            } else {
+//                productIdProductCount.put(it.getId(), 1);
+//            }
+//        }
+//        return productIdProductCount;
+//    }
 }

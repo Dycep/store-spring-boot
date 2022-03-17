@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit item</title>
+    <title>Edit Item</title>
 </head>
 <body>
-<form th:action="@{/item/{id}(id=${item.getId()})}" th:method="patch" th:object="${item}">
-    <label for="name">Enter name of item: </label>
-    <input type="text" th:field="*{name}" id="name" class="form-control" required minlength="2" maxlength="25" />
+<form th:action="@{/item/save}" method="post" th:object="${item}">
+    <label for="firstName">Enter name of item: </label>
+    <input type="text" th:field="*{name}" id="firstName" class="form-control" required minlength="2" maxlength="25" />
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Age error</div>
     <br/>
     <label for="description">Enter last name: </label>
@@ -19,7 +18,7 @@
     <input type="number" min="1" step="any" th:field="*{price}" id="price" class="form-control" required minlength="1" maxlength="15"/>
     <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Age error</div>
     <br/>
-    <input type="submit" value="Update!"/>
+    <input type="submit" value="Create!"/>
 </form>
 </body>
 </html>

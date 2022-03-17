@@ -36,26 +36,6 @@ public class UserService implements UserDetailsService {
         this.confirmationTokenService = confirmationTokenService;
     }
 
-    public Long getAuthId(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getId();
-    }
-    public String getAuthPhone(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getPhone();
-    }
-
-//    public List<User> getAllUsers(User user){
-//        return userRepository.findAll();
-//    }
-//
-//    public void registerNewUser(User user){
-//        Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
-//        if(optionalUser.isPresent()){
-//            throw new IllegalStateException("email taken");
-//        }
-//        userRepository.save(user);
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

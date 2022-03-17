@@ -14,12 +14,12 @@ import java.util.List;
 public class CartRequest {
 
     @NotNull
-    private final List<Item> items;
+    private List<Item> items;
 
     private final User user = (User) SecurityContextHolder
             .getContext().getAuthentication().getPrincipal();
 
-    private final String comment;
+    private String comment;
 
 
 }

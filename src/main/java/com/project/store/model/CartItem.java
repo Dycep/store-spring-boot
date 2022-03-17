@@ -28,6 +28,7 @@ public class CartItem {
     @Column
     private Integer amount;
 
+    //create cart with
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;

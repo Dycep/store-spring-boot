@@ -25,25 +25,24 @@ public class ItemService{
         return itemRepository.findAll();
     }
 
-    //TODO custom exception
     public Item getItem(Long id){
         return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item by id"+id+" was not found"));
     }
 
     @Transactional
-    public void updateItem(Long id, String name, String description, BigDecimal price){
+    public void updateItem(Long id, Item updatedItem){
         Item item = itemRepository.findById(id).orElseThrow(()-> new IllegalStateException("Item with id" + id + " does not exist"));
 
-        if(name!= null && name.length()>0 && !Objects.equals(item.getName(), name)){
-            item.setName(name);
+        if(updatedItem.getName()!= null && updatedItem.getName().length()>0 && !Objects.equals(item.getName(), updatedItem.getName())){
+            item.setName(updatedItem.getName());
         }
 
-        if(description!=null && description.length() > 0 && !Objects.equals(item.getDescription(), description)){
-            item.setDescription(description);
+        if(updatedItem.getDescription()!=null && updatedItem.getDescription().length() > 0 && !Objects.equals(item.getDescription(), updatedItem.getDescription())){
+            item.setDescription(updatedItem.getDescription());
         }
 
-        if (price!=null && price.compareTo(item.getPrice())!=0 && !Objects.equals(item.getPrice(), price)){
-            item.setPrice(price);
+        if (updatedItem.getPrice()!=null && updatedItem.getPrice().compareTo(item.getPrice())!=0 && !Objects.equals(item.getPrice(), updatedItem.getPrice())){
+            item.setPrice(updatedItem.getPrice());
         }
     }
 
