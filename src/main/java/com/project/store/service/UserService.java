@@ -4,6 +4,7 @@ import com.project.store.model.User;
 import com.project.store.registration.token.ConfirmationToken;
 import com.project.store.registration.token.ConfirmationTokenService;
 import com.project.store.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
@@ -29,17 +31,13 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, ConfirmationTokenService confirmationTokenService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.confirmationTokenService = confirmationTokenService;
-    }
-
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email).orElseThrow(()-> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
+    }
+
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
     public String signUpUser(User user){

@@ -44,7 +44,6 @@ public class RegistrationService {
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
 
-        //link as well
         return token;
     }
 

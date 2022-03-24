@@ -2,6 +2,7 @@ package com.project.store.model;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -25,9 +26,6 @@ public class CartItem {
     @Column(name = "id")
     private Integer id;
 
-    @Column
-    private Integer amount;
-
     //create cart with
     @ManyToOne
     @JoinColumn(name = "cart_id")
@@ -37,4 +35,8 @@ public class CartItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    public CartItem(Cart cart, Item item) {
+        this.cart = cart;
+        this.item = item;
+    }
 }

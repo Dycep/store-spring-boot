@@ -1,5 +1,6 @@
 package com.project.store.service;
 
+import com.project.store.exception.ItemAlreadyExistsException;
 import com.project.store.exception.ItemNotFoundException;
 import com.project.store.model.Item;
 import com.project.store.repository.ItemRepository;
@@ -30,23 +31,26 @@ public class ItemService{
     }
 
     @Transactional
-    public void updateItem(Long id, Item updatedItem){
+    public void updateItem(Long id, String name, String description, BigDecimal price){
         Item item = itemRepository.findById(id).orElseThrow(()-> new IllegalStateException("Item with id" + id + " does not exist"));
 
-        if(updatedItem.getName()!= null && updatedItem.getName().length()>0 && !Objects.equals(item.getName(), updatedItem.getName())){
-            item.setName(updatedItem.getName());
+        if(name!= null && name.length()>0 && !Objects.equals(item.getName(), name)){
+            item.setName(name);
         }
 
-        if(updatedItem.getDescription()!=null && updatedItem.getDescription().length() > 0 && !Objects.equals(item.getDescription(), updatedItem.getDescription())){
-            item.setDescription(updatedItem.getDescription());
+        if(description!=null && description.length() > 0 && !Objects.equals(item.getDescription(), description)){
+            item.setDescription(description);
         }
 
-        if (updatedItem.getPrice()!=null && updatedItem.getPrice().compareTo(item.getPrice())!=0 && !Objects.equals(item.getPrice(), updatedItem.getPrice())){
-            item.setPrice(updatedItem.getPrice());
+        if (price!=null && price.compareTo(item.getPrice())!=0 && !Objects.equals(item.getPrice(), price)){
+            item.setPrice(price);
         }
     }
 
-    public void save(Item item){
+    public void createItem(Item item){
+        if (itemRepository.existsItemByNameAndDescriptionAndPrice(item.getName(), item.getDescription(), item.getPrice())) {
+            throw new ItemAlreadyExistsException("Item already exists");
+        }
         itemRepository.save(item);
     }
 
