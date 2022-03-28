@@ -1,4 +1,4 @@
-package com.project.store.registration;
+package com.project.store.email;
 
 import org.springframework.stereotype.Service;
 

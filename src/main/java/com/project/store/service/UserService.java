@@ -1,13 +1,10 @@
 package com.project.store.service;
 
+import com.project.store.exception.email.EmailIsAlreadyTaken;
 import com.project.store.model.User;
-import com.project.store.registration.token.ConfirmationToken;
-import com.project.store.registration.token.ConfirmationTokenService;
+import com.project.store.model.ConfirmationToken;
 import com.project.store.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -36,7 +31,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByEmail(email).orElseThrow(()-> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
-    public User findUserByEmail(String email){
+    public User getUserByEmail(String email){
         return userRepository.findUserByEmail(email).orElseThrow(()->new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
@@ -44,7 +39,7 @@ public class UserService implements UserDetailsService {
         boolean userExists = userRepository.findUserByEmail(user.getEmail())
                 .isPresent();
         if(userExists){
-            throw new IllegalStateException("user with this email exists");
+            throw new EmailIsAlreadyTaken("User with this email exists");
         }
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -67,7 +62,7 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
-    public int enableUser(String email) {
-        return userRepository.enableUser(email);
+    public void enableUser(String email) {
+        userRepository.enableUser(email);
     }
 }

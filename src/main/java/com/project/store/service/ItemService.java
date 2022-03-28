@@ -1,19 +1,16 @@
 package com.project.store.service;
 
-import com.project.store.exception.ItemAlreadyExistsException;
-import com.project.store.exception.ItemNotFoundException;
+import com.project.store.exception.item.ItemAlreadyExistsException;
+import com.project.store.exception.item.ItemNotFoundException;
 import com.project.store.model.Item;
 import com.project.store.repository.ItemRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,13 +23,12 @@ public class ItemService{
         return itemRepository.findAll();
     }
 
-    public Item getItem(Long id){
-        return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item by id"+id+" was not found"));
+    public Item getItemById(Long id){
+        return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item with id"+id+" was not found"));
     }
 
-    @Transactional
     public void updateItem(Long id, String name, String description, BigDecimal price){
-        Item item = itemRepository.findById(id).orElseThrow(()-> new IllegalStateException("Item with id" + id + " does not exist"));
+        Item item = getItemById(id);
 
         if(name!= null && name.length()>0 && !Objects.equals(item.getName(), name)){
             item.setName(name);

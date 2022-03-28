@@ -1,4 +1,4 @@
-package com.project.store.exception;
+package com.project.store.exception.item;
 
 public class ItemNotFoundException extends RuntimeException{
 

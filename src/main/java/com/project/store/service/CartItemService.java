@@ -20,7 +20,7 @@ public class CartItemService {
     private final CartItemRepository cartItemRepository;
 
 
-    public void save(CartItem cartItem){
+    public void createCartItem(CartItem cartItem){
         cartItemRepository.save(cartItem);
     }
 

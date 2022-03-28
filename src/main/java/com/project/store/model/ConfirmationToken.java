@@ -1,4 +1,4 @@
-package com.project.store.registration.token;
+package com.project.store.model;
 
 import com.project.store.model.User;
 import lombok.AllArgsConstructor;

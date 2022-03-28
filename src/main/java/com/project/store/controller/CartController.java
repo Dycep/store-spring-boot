@@ -12,14 +12,10 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/cart")
+@CrossOrigin("http:/localhost:3000")
 public class CartController {
 
     private final CartService cartService;
-
-    @GetMapping
-    public void showCart(){
-
-    }
 
     @PostMapping
     public void saveCart(@Valid @RequestBody PurchaseRequest purchaseRequest){

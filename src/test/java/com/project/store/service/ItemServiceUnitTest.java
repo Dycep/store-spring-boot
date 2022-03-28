@@ -1,21 +1,18 @@
 package com.project.store.service;
 
-import com.project.store.exception.ItemAlreadyExistsException;
-import com.project.store.exception.ItemNotFoundException;
+import com.project.store.exception.item.ItemAlreadyExistsException;
+import com.project.store.exception.item.ItemNotFoundException;
 import com.project.store.model.Item;
 import com.project.store.repository.ItemRepository;
-import org.assertj.core.api.AssertionsForClassTypes;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extensions;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -26,7 +23,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class ItemServiceTest {
+class ItemServiceUnitTest {
 
     @Mock
     private ItemRepository itemRepository;
@@ -40,15 +37,13 @@ class ItemServiceTest {
 
 
     @Test
-    void canGetAllItems() {
-        //when
+    void shouldGetAllItems() {
         underTest.getAllItems();
-        //then
         verify(itemRepository).findAll();
     }
 
     @Test
-    void canCreateItem() {
+    void shouldCreateItem() {
         Item item = new Item(
                 "name",
                 "description",
@@ -64,7 +59,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void willThrownItemAlreadyExistsException(){
+    void willThrowItemAlreadyExistsException(){
         String name = "name";
         String description = "description";
         BigDecimal price = BigDecimal.valueOf(10);
@@ -82,15 +77,32 @@ class ItemServiceTest {
     }
 
     @Test
-    void getItem() {
+    void shouldGetItemById() {
+        Item item = new Item();
+        item.setId(89L);
+
+        given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
+
+        underTest.getItemById(89L);
+
+        verify(itemRepository).findById(item.getId());
     }
 
     @Test
-    void updateItem() {
+    void shouldUpdateItem() {
+        Item item = new Item(89L, "name", "description", BigDecimal.valueOf(10));
+
+        given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
+
+        underTest.updateItem(item.getId(), "nam", "des", BigDecimal.valueOf(1));
+        assertEquals("nam", item.getName());
+        assertEquals("des", item.getDescription());
+        assertEquals(BigDecimal.valueOf(1), item.getPrice());
+
     }
 
     @Test
-    void canDeleteItemById() {
+    void shouldDeleteItemById() {
         long id = 10;
         given(itemRepository.existsById(id))
                 .willReturn(true);
@@ -101,7 +113,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void willThrownItemNotFoundException(){
+    void willThrowItemNotFoundException(){
         long id = 10;
         given(itemRepository.existsById(id))
                 .willReturn(false);

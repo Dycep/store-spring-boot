@@ -1,4 +1,4 @@
-package com.project.store.registration;
+package com.project.store.controller.dto;
 
 import com.project.store.model.User;
 import com.project.store.model.UserRole;

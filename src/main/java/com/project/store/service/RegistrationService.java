@@ -1,13 +1,13 @@
-package com.project.store.registration;
+package com.project.store.service;
 
 import com.project.store.email.EmailSender;
+import com.project.store.exception.email.EmailIsNotValidException;
 import com.project.store.model.User;
 import com.project.store.model.UserRole;
-import com.project.store.registration.token.ConfirmationToken;
-import com.project.store.registration.token.ConfirmationTokenService;
-import com.project.store.service.UserService;
+import com.project.store.email.EmailValidator;
+import com.project.store.controller.dto.RegistrationRequest;
+import com.project.store.model.ConfirmationToken;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,7 +27,7 @@ public class RegistrationService {
     public String register(RegistrationRequest request){
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if(!isValidEmail){
-            throw new IllegalStateException("email not valid");
+            throw new EmailIsNotValidException("email is not valid");
         }
         String token = userService.signUpUser(
                 new User(
@@ -49,10 +49,7 @@ public class RegistrationService {
 
     @Transactional
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService
-                .getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
 
         if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
@@ -67,6 +64,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         userService.enableUser(
                 confirmationToken.getUser().getEmail());
+
         return "confirmed";
     }
     private String buildEmail(String name, String link) {

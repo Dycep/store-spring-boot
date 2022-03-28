@@ -1,5 +1,7 @@
-package com.project.store.registration;
+package com.project.store.controller;
 
+import com.project.store.controller.dto.RegistrationRequest;
+import com.project.store.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

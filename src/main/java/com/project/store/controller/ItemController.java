@@ -33,12 +33,15 @@ public class ItemController {
 
     @GetMapping("{id}")
     public Item showItem(@PathVariable Long id){
-        return itemService.getItem(id);
+        return itemService.getItemById(id);
     }
 
 
     @PutMapping("/{id}")
-    public void updateItem(@PathVariable Long id, @RequestParam(required = false) String name, @RequestParam(required = false) String description, @RequestParam(required = false) BigDecimal price){
+    public void updateItem(@PathVariable Long id,
+                           @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String description,
+                           @RequestParam(required = false) BigDecimal price){
         itemService.updateItem(id, name, description, price);
     }
 

@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class ItemRepositoryTest {
+class ItemRepositoryUnitTest {
 
     @Autowired
     private ItemRepository underTest;
@@ -36,7 +36,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    void itShouldCheckWhenItemDoesntExist(){
+    void shouldCheckWhenItemDoesntExist(){
         String name = "name";
         String description = "description";
         BigDecimal price = BigDecimal.valueOf(10);
