@@ -14,10 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -47,7 +49,7 @@ class ItemServiceUnitTest {
         Item item = new Item(
                 "name",
                 "description",
-                BigDecimal.valueOf(10)
+                valueOf(10)
         );
         underTest.createItem(item);
 
@@ -62,7 +64,7 @@ class ItemServiceUnitTest {
     void willThrowItemAlreadyExistsException(){
         String name = "name";
         String description = "description";
-        BigDecimal price = BigDecimal.valueOf(10);
+        BigDecimal price = valueOf(10);
 
         Item item = new Item(name, description, price);
 
@@ -90,16 +92,27 @@ class ItemServiceUnitTest {
 
     @Test
     void shouldUpdateItem() {
-        Item item = new Item(89L, "name", "description", BigDecimal.valueOf(10));
+        Item item = new Item(89L, "name", "description", valueOf(10));
 
         given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
+        underTest.updateItem(89L, "nam","des");
+        verify(itemRepository).updateItemName(89L, "nam");
+        verify(itemRepository).updateItemDescription(89L, "des");
+        assertEquals(item.getPrice(), valueOf(10));
+    }
 
-        underTest.updateItem(item.getId(), "nam", "des", BigDecimal.valueOf(1));
-        assertEquals("nam", item.getName());
-        assertEquals("des", item.getDescription());
-        assertEquals(BigDecimal.valueOf(1), item.getPrice());
+    @Test
+    void shouldNotUpdateItem(){
+        Item item = new Item(89L, "n", "d", valueOf(10));
+        given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
+
+        underTest.updateItem(89L, "n", "d");
+        verify(itemRepository, never()).updateItemName(89L, "n");
+        verify(itemRepository, never()).updateItemDescription(89L, "d");
+        assertEquals(item.getPrice(), valueOf(10));
 
     }
+
 
     @Test
     void shouldDeleteItemById() {

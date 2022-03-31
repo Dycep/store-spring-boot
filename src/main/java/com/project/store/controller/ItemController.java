@@ -40,9 +40,8 @@ public class ItemController {
     @PutMapping("/{id}")
     public void updateItem(@PathVariable Long id,
                            @RequestParam(required = false) String name,
-                           @RequestParam(required = false) String description,
-                           @RequestParam(required = false) BigDecimal price){
-        itemService.updateItem(id, name, description, price);
+                           @RequestParam(required = false) String description){
+        itemService.updateItem(id, name, description);
     }
 
     @PostMapping("/create")
