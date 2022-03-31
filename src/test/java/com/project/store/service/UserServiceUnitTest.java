@@ -1,12 +1,14 @@
 package com.project.store.service;
 
 import com.project.store.exception.email.EmailIsAlreadyTaken;
+import com.project.store.model.ConfirmationToken;
 import com.project.store.model.User;
 import com.project.store.model.UserRole;
 import com.project.store.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +23,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceUnitTest {
 
     @Mock
     private UserRepository userRepository;
@@ -60,8 +62,15 @@ class UserServiceTest {
     @Test
     void shouldSignUpUser() {
         User user = new User();
+        user.setEmail("email@mail.ru");
         underTest.signUpUser(user);
-        verify(userRepository).save(user);
+
+        ArgumentCaptor<User> argumentCaptor =
+                ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(argumentCaptor.capture());
+
+        User capturedUser = argumentCaptor.getValue();
+        assertThat(capturedUser).isEqualTo(user);
     }
 
     @Test

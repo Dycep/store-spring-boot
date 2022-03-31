@@ -1,7 +1,10 @@
 package com.project.store.service;
 
 import com.project.store.email.EmailSender;
+import com.project.store.exception.email.EmailAlreadyConfirmedException;
 import com.project.store.exception.email.EmailIsNotValidException;
+import com.project.store.exception.token.ConfirmationTokenExpiredException;
+import com.project.store.exception.token.ConfirmationTokenNotFoundException;
 import com.project.store.model.User;
 import com.project.store.model.UserRole;
 import com.project.store.email.EmailValidator;
@@ -13,19 +16,19 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
+import static com.project.store.email.EmailValidator.emailValidation;
+
 @Service
 @AllArgsConstructor
 public class RegistrationService {
 
     private final UserService userService;
-    private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
 
-
     public String register(RegistrationRequest request){
-        boolean isValidEmail = emailValidator.test(request.getEmail());
+        boolean isValidEmail = emailValidation(request.getEmail());
         if(!isValidEmail){
             throw new EmailIsNotValidException("email is not valid");
         }
@@ -52,13 +55,13 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token);
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            throw new EmailAlreadyConfirmedException("email already confirmed");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            throw new ConfirmationTokenExpiredException("token expired");
         }
 
         confirmationTokenService.setConfirmedAt(token);

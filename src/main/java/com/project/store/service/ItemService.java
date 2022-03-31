@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,19 +26,18 @@ public class ItemService{
         return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item with id"+id+" was not found"));
     }
 
-    public void updateItem(Long id, String name, String description, BigDecimal price){
-        Item item = getItemById(id);
+    //TODO: change
+    @Transactional
+    public void updateItem(Long id, String name, String description){
+        Item item = itemRepository.findById(id)
+                .orElseThrow(()->new ItemNotFoundException("Item with id"+id+" was not found"));
 
         if(name!= null && name.length()>0 && !Objects.equals(item.getName(), name)){
-            item.setName(name);
+            itemRepository.updateItemName(id, name);
         }
 
         if(description!=null && description.length() > 0 && !Objects.equals(item.getDescription(), description)){
-            item.setDescription(description);
-        }
-
-        if (price!=null && price.compareTo(item.getPrice())!=0 && !Objects.equals(item.getPrice(), price)){
-            item.setPrice(price);
+            itemRepository.updateItemDescription(id, description);
         }
     }
 

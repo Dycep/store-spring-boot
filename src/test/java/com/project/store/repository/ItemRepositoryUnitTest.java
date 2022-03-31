@@ -31,7 +31,8 @@ class ItemRepositoryUnitTest {
         Item item = new Item(name, description, price);
         underTest.save(item);
 
-        boolean expected = underTest.existsItemByNameAndDescriptionAndPrice(name, description, price);
+        boolean expected = underTest
+                .existsItemByNameAndDescriptionAndPrice(name, description, price);
         assertThat(expected).isTrue();
     }
 
@@ -43,6 +44,12 @@ class ItemRepositoryUnitTest {
 
         boolean expected = underTest.existsItemByNameAndDescriptionAndPrice(name, description, price);
         assertThat(expected).isFalse();
+
+    }
+
+    @Test
+    void shouldUpdateItemName() {
+
 
     }
 }
