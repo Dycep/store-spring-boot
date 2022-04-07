@@ -1,15 +1,13 @@
 package com.project.store.model;
 
 import lombok.*;
-import org.checkerframework.checker.regex.qual.Regex;
-import org.springframework.context.annotation.ComponentScan;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.validation.annotation.Validated;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 import java.time.LocalDate;
 import java.time.Period;

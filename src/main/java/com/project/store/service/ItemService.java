@@ -26,7 +26,6 @@ public class ItemService{
         return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item with id"+id+" was not found"));
     }
 
-    //TODO: change
     @Transactional
     public void updateItem(Long id, String name, String description){
         Item item = itemRepository.findById(id)

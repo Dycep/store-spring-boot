@@ -5,21 +5,18 @@ import lombok.*;
 import javax.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 
 @Entity
-@Table(
-        name = "items"
-)
+@Table(name = "items")
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Item {
 
     @Id
@@ -59,23 +56,11 @@ public class Item {
 
 
 
-
     public Item(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                '}';
-    }
 
 }

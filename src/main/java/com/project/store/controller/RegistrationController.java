@@ -5,6 +5,8 @@ import com.project.store.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/registration")
 @AllArgsConstructor
@@ -14,11 +16,11 @@ public class RegistrationController {
 
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request){
+    public String register(@Valid @RequestBody RegistrationRequest request){
         return registrationService.register(request);
     }
 
-    @GetMapping(path = "confirm")
+    @GetMapping("/confirm")
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }

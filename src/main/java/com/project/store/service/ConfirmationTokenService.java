@@ -20,7 +20,8 @@ public class ConfirmationTokenService {
     }
 
     public ConfirmationToken getToken(String token){
-        return confirmationTokenRepository.findByToken(token).orElseThrow(()->new ConfirmationTokenNotFoundException("Token has not been found"));
+        return confirmationTokenRepository.findByToken(token)
+                .orElseThrow(()->new ConfirmationTokenNotFoundException("Token has not been found"));
     }
 
     public void setConfirmedAt(String token) {

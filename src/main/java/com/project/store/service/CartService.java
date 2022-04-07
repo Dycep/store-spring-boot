@@ -25,9 +25,11 @@ public class CartService {
         cart.setComment(request.getComment());
         cartRepository.save(cart);
 
-        itemIdList.forEach(id->cartItemService.createCartItem(new CartItem(
-                cart,
-                itemService.getItemById(id))
-        ));
+        for (Long id : itemIdList) {
+            cartItemService.createCartItem(new CartItem(
+                    cart,
+                    itemService.getItemById(id))
+            );
+        }
     }
 }

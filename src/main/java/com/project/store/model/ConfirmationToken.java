@@ -1,8 +1,5 @@
 package com.project.store.model;
 
-import com.project.store.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
