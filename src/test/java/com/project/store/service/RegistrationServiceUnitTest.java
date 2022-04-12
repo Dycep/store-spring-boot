@@ -1,8 +1,7 @@
 package com.project.store.service;
 
-import com.project.store.controller.dto.RegistrationRequest;
+import com.project.store.dto.RegistrationRequest;
 import com.project.store.email.EmailSender;
-import com.project.store.email.EmailValidator;
 import com.project.store.exception.email.EmailAlreadyConfirmedException;
 import com.project.store.exception.email.EmailIsNotValidException;
 import com.project.store.exception.token.ConfirmationTokenExpiredException;
@@ -15,11 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;

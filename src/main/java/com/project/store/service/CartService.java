@@ -1,6 +1,6 @@
 package com.project.store.service;
 
-import com.project.store.controller.dto.PurchaseRequest;
+import com.project.store.dto.PurchaseRequest;
 import com.project.store.model.Cart;
 import com.project.store.model.CartItem;
 import com.project.store.repository.CartRepository;

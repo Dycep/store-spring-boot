@@ -1,6 +1,6 @@
 package com.project.store.controller;
 
-import com.project.store.controller.dto.PurchaseRequest;
+import com.project.store.dto.PurchaseRequest;
 import com.project.store.service.CartService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.project.store.model.UserRole.ADMIN;
 import static com.project.store.model.UserRole.CUSTOMER;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;

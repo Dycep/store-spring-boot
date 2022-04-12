@@ -1,26 +1,17 @@
 package com.project.store.controller;
 
-import com.project.store.model.Cart;
 import com.project.store.model.Item;
-import com.project.store.service.CartItemService;
 import com.project.store.service.ItemService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
 @RequestMapping(path = "/")
-@CrossOrigin("http:/localhost:3000")
+@CrossOrigin("http://localhost:3000")
 @AllArgsConstructor
 public class ItemController {
 

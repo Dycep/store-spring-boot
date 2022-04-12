@@ -1,10 +1,6 @@
-package com.project.store.controller.dto;
+package com.project.store.dto;
 
-import com.project.store.model.User;
-import com.project.store.model.UserRole;
 import lombok.*;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
