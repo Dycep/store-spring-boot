@@ -19,10 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class RegistrationControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private RegistrationService registrationService;
 
@@ -36,7 +34,6 @@ class RegistrationControllerTest {
                             "\"email\":\"email@mail.ru\"}, " +
                             "\"phone\": \"375292999292\" }"))
                 .andExpect(status().isOk());
-
         verify(registrationService).register(any(RegistrationRequest.class));
     }
 
@@ -46,7 +43,6 @@ class RegistrationControllerTest {
                 get("/registration/confirm")
                 .param("token", "token")
         ).andExpect(status().isOk());
-
         verify(registrationService).confirmToken("token");
     }
 }

@@ -24,7 +24,6 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceUnitTest {
-
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -42,9 +41,7 @@ class UserServiceUnitTest {
         User user = new User();
         user.setEmail("email@mail.ru");
         given(userRepository.findUserByEmail(user.getEmail())).willReturn(Optional.of(user));
-
         underTest.loadUserByUsername(user.getEmail());
-
         verify(userRepository).findUserByEmail(user.getEmail());
     }
 
@@ -53,9 +50,7 @@ class UserServiceUnitTest {
         User user = new User();
         user.setEmail("email@mail.ru");
         given(userRepository.findUserByEmail(user.getEmail())).willReturn(Optional.of(user));
-
         underTest.getUserByEmail(user.getEmail());
-
         verify(userRepository).findUserByEmail(user.getEmail());
     }
 
@@ -64,11 +59,9 @@ class UserServiceUnitTest {
         User user = new User();
         user.setEmail("email@mail.ru");
         underTest.signUpUser(user);
-
         ArgumentCaptor<User> argumentCaptor =
                 ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(argumentCaptor.capture());
-
         User capturedUser = argumentCaptor.getValue();
         assertThat(capturedUser).isEqualTo(user);
     }
@@ -79,11 +72,9 @@ class UserServiceUnitTest {
         user.setEmail("email@mail.ru");
         given(userRepository.findUserByEmail(user.getEmail()))
                 .willReturn(Optional.of(user));
-
         assertThatThrownBy(()->underTest.signUpUser(user))
                 .isInstanceOf(EmailIsAlreadyTaken.class)
                 .hasMessageContaining("User with this email exists");
-
         verify(userRepository, never()).save(user);
     }
 
@@ -91,7 +82,6 @@ class UserServiceUnitTest {
     void shouldEnableUser() {
         User user = new User();
         user.setEmail("email@mail.ru");
-
         underTest.enableUser(user.getEmail());
         verify(userRepository).enableUser(user.getEmail());
     }

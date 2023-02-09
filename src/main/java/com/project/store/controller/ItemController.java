@@ -14,7 +14,6 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 @AllArgsConstructor
 public class ItemController {
-
     private final ItemService itemService;
 
     @GetMapping()

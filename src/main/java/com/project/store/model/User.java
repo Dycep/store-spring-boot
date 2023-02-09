@@ -17,72 +17,34 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 
 @Entity
-@Table(
-        name = "users",
-        uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_unique", columnNames = "email"),
-                @UniqueConstraint(name = "phone_unique_constraint", columnNames = "phone")
-        }
-)
+                @UniqueConstraint(name = "phone_unique_constraint", columnNames = "phone")})
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString(exclude = "password")
 public class User implements UserDetails {
-
     @Id
     @SequenceGenerator(name = "user_sequence",
             sequenceName = "user_sequence",
             allocationSize = 1)
-    @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "user_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
+    @GeneratedValue(strategy = SEQUENCE, generator = "user_sequence")
+    @Column(name = "id", updatable = false)
     private Long id;
-
-    @Column(
-            name = "first_name",
-            nullable = false,
-            columnDefinition = "TEXT",
-            length = 40
-    )
+    @Column(name = "first_name", nullable = false, columnDefinition = "TEXT", length = 40)
     private String firstName;
-
-    @Column(
-            name = "last_name",
-            nullable = false,
-            columnDefinition = "TEXT",
-            length = 40
-    )
+    @Column(name = "last_name", nullable = false, columnDefinition = "TEXT", length = 40)
     private String lastName;
-
-    @Column(
-            name = "phone",
-            nullable = false,
-            length = 12
-    )
+    @Column(name = "phone", nullable = false, length = 12)
     private String phone;
-
-    @Column(
-            name = "email",
-            nullable = false,
-            columnDefinition = "TEXT",
-            length = 45
-    )
-
+    @Column(name = "email", nullable = false, columnDefinition = "TEXT", length = 45)
     private String email;
-
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.CUSTOMER;
-
     @Column
     private String password;
-
     private Boolean locked = false;
     private Boolean enabled = false;
 //    @Column(
@@ -90,17 +52,8 @@ public class User implements UserDetails {
 //            nullable = false
 //    )
 //    private LocalDate dob;
-
     @Transient
     private Integer age;
-
-
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    private Set<Cart> cart;
-
 
     public User(String firstName, String lastName, String email, String password, String phone, UserRole userRole) {
         this.firstName = firstName;
@@ -120,8 +73,6 @@ public class User implements UserDetails {
 //    public void setAge(Integer age) {
 //        this.age = age;
 //    }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

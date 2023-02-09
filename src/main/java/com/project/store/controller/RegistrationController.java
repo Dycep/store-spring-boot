@@ -11,9 +11,7 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 @AllArgsConstructor
 public class RegistrationController {
-
     private RegistrationService registrationService;
-
 
     @PostMapping
     public String register(@Valid @RequestBody RegistrationRequest request){

@@ -19,11 +19,9 @@ import static com.project.store.email.EmailValidator.emailValidation;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
-
 
     public String register(RegistrationRequest request){
         boolean isValidEmail = emailValidation(request.getEmail());

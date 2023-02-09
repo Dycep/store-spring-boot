@@ -19,43 +19,30 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ItemServiceUnitTest {
-
     @Mock
     private ItemRepository itemRepository;
-
     private ItemService underTest;
-
     @BeforeEach
     void setUp() {
         underTest = new ItemService(itemRepository);
     }
-
-
     @Test
     void shouldGetAllItems() {
         underTest.getAllItems();
         verify(itemRepository).findAll();
     }
-
     @Test
     void shouldCreateItem() {
-        Item item = new Item(
-                "name",
-                "description",
-                valueOf(10)
-        );
+        Item item = new Item("name", "description", valueOf(10));
         underTest.createItem(item);
-
         ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
         verify(itemRepository).save(itemArgumentCaptor.capture());
-
         Item capturedItem = itemArgumentCaptor.getValue();
         assertThat(capturedItem).isEqualTo(item);
     }
@@ -65,16 +52,13 @@ class ItemServiceUnitTest {
         String name = "name";
         String description = "description";
         BigDecimal price = valueOf(10);
-
         Item item = new Item(name, description, price);
 
         given(itemRepository.existsItemByNameAndDescriptionAndPrice(name, description, price))
                 .willReturn(true);
-
         assertThatThrownBy(() -> underTest.createItem(item))
                 .isInstanceOf(ItemAlreadyExistsException.class)
                 .hasMessageContaining("Item already exists");
-
         verify(itemRepository, never()).save(any());
     }
 
@@ -84,9 +68,7 @@ class ItemServiceUnitTest {
         item.setId(89L);
 
         given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
-
         underTest.getItemById(89L);
-
         verify(itemRepository).findById(item.getId());
     }
 
@@ -110,18 +92,14 @@ class ItemServiceUnitTest {
         verify(itemRepository, never()).updateItemName(89L, "n");
         verify(itemRepository, never()).updateItemDescription(89L, "d");
         assertEquals(item.getPrice(), valueOf(10));
-
     }
-
 
     @Test
     void shouldDeleteItemById() {
         long id = 10;
         given(itemRepository.existsById(id))
                 .willReturn(true);
-
         underTest.deleteItemById(id);
-
         verify(itemRepository).deleteById(id);
     }
 
@@ -130,11 +108,9 @@ class ItemServiceUnitTest {
         long id = 10;
         given(itemRepository.existsById(id))
                 .willReturn(false);
-
         assertThatThrownBy(() -> underTest.deleteItemById(id))
                 .isInstanceOf(ItemNotFoundException.class)
                 .hasMessageContaining("Item with id "+id+" does not exist");
-
         verify(itemRepository, never()).deleteById(any());
     }
 }

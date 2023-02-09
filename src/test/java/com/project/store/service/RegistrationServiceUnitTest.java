@@ -23,7 +23,6 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class RegistrationServiceUnitTest {
-
     @Mock
     private UserService userService;
     @Mock

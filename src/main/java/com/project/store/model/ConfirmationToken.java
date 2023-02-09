@@ -10,33 +10,19 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class ConfirmationToken {
 
     @Id
-    @SequenceGenerator(name = "confirmation_token_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "confirmation_token_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
+    @SequenceGenerator(name = "confirmation_token_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "confirmation_token_sequence")
+    @Column(name = "id", updatable = false)
     private Long id;
-
     @Column(nullable = false)
     private String token;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime expiresAt;
-
     private LocalDateTime confirmedAt;
-
     @ManyToOne
-    @JoinColumn(
-            nullable = false,
-            name = "user_id"
-    )
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
     public ConfirmationToken() {

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 @ToString
 @EqualsAndHashCode
 public class PurchaseRequest {
-
     private final ArrayList<Long> itemIdList;
     private final String email;
     private final String phone;

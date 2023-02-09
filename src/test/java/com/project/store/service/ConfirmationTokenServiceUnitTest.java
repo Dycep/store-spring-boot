@@ -9,24 +9,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.*;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ConfirmationTokenServiceUnitTest {
-
     @Mock
     private ConfirmationTokenRepository confirmationTokenRepository;
-
     private ConfirmationTokenService underTest;
 
     @BeforeEach
@@ -38,11 +30,9 @@ class ConfirmationTokenServiceUnitTest {
     void shouldSaveConfirmationToken() {
         ConfirmationToken token = new ConfirmationToken();
         underTest.saveConfirmationToken(token);
-
         ArgumentCaptor<ConfirmationToken> argumentCaptor =
                 ArgumentCaptor.forClass(ConfirmationToken.class);
         verify(confirmationTokenRepository).save(argumentCaptor.capture());
-
         ConfirmationToken capturedToken = argumentCaptor.getValue();
         assertThat(capturedToken).isEqualTo(token);
     }
@@ -56,7 +46,6 @@ class ConfirmationTokenServiceUnitTest {
 
         underTest.getToken(token.getToken());
         verify(confirmationTokenRepository).findByToken("token");
-
     }
 
     @Test
@@ -64,7 +53,6 @@ class ConfirmationTokenServiceUnitTest {
         assertThatThrownBy(()-> underTest.getToken("token"))
                 .isInstanceOf(ConfirmationTokenNotFoundException.class)
                 .hasMessage("Token has not been found");
-
     }
 
     @Test

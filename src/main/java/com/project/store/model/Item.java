@@ -20,47 +20,21 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class Item {
 
     @Id
-    @SequenceGenerator(
-            name = "item_sequence",
-            sequenceName = "item_sequence",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = SEQUENCE,
-            generator = "item_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
+    @SequenceGenerator(name = "item_sequence", sequenceName = "item_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "item_sequence")
+    @Column(name = "id", updatable = false)
     private Long id;
-
-    @Column(
-            name = "name",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
-
-    @Column(
-            name = "description",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
-
-    @Column(
-            name = "price",
-            nullable = false
-    )
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
-
-
 
     public Item(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
-
 
 }
