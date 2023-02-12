@@ -5,7 +5,7 @@ import com.project.store.exception.email.EmailAlreadyConfirmedException;
 import com.project.store.exception.email.EmailIsNotValidException;
 import com.project.store.exception.token.ConfirmationTokenExpiredException;
 import com.project.store.model.User;
-import com.project.store.model.UserRole;
+import com.project.store.security.UserRole;
 import com.project.store.dto.RegistrationRequest;
 import com.project.store.model.ConfirmationToken;
 import lombok.AllArgsConstructor;
@@ -39,10 +39,7 @@ public class RegistrationService {
                         )
         );
         String link="http://localhost:8080/registration/confirm?token" + token;
-        emailSender.send(
-                request.getEmail(),
-                buildEmail(request.getFirstName(), link));
-
+        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }
 

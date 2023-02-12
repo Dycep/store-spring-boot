@@ -17,15 +17,14 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping()
-    public List<Item> showAllItems(){
+    public List<Item> getAllItems(){
         return itemService.getAllItems();
     }
 
     @GetMapping("/{id}")
-    public Item showItem(@PathVariable Long id){
+    public Item getItem(@PathVariable Long id){
         return itemService.getItemById(id);
     }
-
 
     @PutMapping("/{id}")
     public void updateItem(@PathVariable Long id,
@@ -35,9 +34,9 @@ public class ItemController {
     }
 
     @PostMapping("/create")
-    public void createItem(@Valid @RequestBody Item item){
-        itemService.createItem(item);
-    }
+    public Item createItem(@Valid @RequestBody Item item){
+        return itemService.createItem(item);
+    }//TODO return created item
 
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Long id){

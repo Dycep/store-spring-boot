@@ -8,7 +8,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 public class ConfirmationToken {
-
     @Id
     @SequenceGenerator(name = "confirmation_token_sequence", sequenceName = "user_sequence", allocationSize = 1)
     @GeneratedValue(strategy = SEQUENCE, generator = "confirmation_token_sequence")

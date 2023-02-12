@@ -7,14 +7,12 @@ import com.project.store.repository.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 public class ItemService{
-
     private final ItemRepository itemRepository;
 
 
@@ -39,14 +37,15 @@ public class ItemService{
             itemRepository.updateItemDescription(id, description);
         }
     }
-
-    public void createItem(Item item){
+    //TODO refactor method to not throwing exception, rather make boolean
+    public Item createItem(Item item){
         if (itemRepository.existsItemByNameAndDescriptionAndPrice(item.getName(), item.getDescription(), item.getPrice())) {
             throw new ItemAlreadyExistsException("Item already exists");
         }
         itemRepository.save(item);
+        return itemRepository.findItemByNameAndDescriptionAndPrice(item.getName(), item.getDescription(), item.getPrice());
     }
-
+    //TODO boolean type
     public void deleteItemById(Long id){
         if(!itemRepository.existsById(id)){
             throw new ItemNotFoundException("Item with id "+id+" does not exist");

@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    Item findItemByNameAndDescriptionAndPrice(String name, String description, BigDecimal price);
+
     boolean existsItemByNameAndDescriptionAndPrice(String name, String description, BigDecimal price);
 
     @Transactional

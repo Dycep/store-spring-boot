@@ -1,24 +1,20 @@
 package com.project.store.controller;
 
 import com.project.store.model.Item;
-import com.project.store.model.UserRole;
 import com.project.store.service.ItemService;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.project.store.model.UserRole.ADMIN;
+import static com.project.store.security.UserRole.ADMIN;
 import static java.math.BigDecimal.valueOf;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -40,7 +36,6 @@ class ItemControllerTest {
     void shouldShowAllItems() throws Exception {
         when(itemService.getAllItems())
                 .thenReturn(List.of(new Item("name", "description", valueOf(1))));
-
         mockMvc
                 .perform(get("/"))
                 .andExpect(status().isOk())
@@ -54,7 +49,6 @@ class ItemControllerTest {
     void shouldShowItem() throws Exception {
         when(itemService.getItemById(1L))
                 .thenReturn(new Item(1L,"name", "description", valueOf(1)));
-
         mockMvc
                 .perform(get("/1"))
                 .andExpect(status().isOk())
@@ -72,7 +66,6 @@ class ItemControllerTest {
             item.setDescription("des");
             return null;
         }).when(itemService).updateItem(1L, "nam", "des");
-
         mockMvc
                 .perform(put("/1")
                         .param("name","nam")
@@ -92,7 +85,6 @@ class ItemControllerTest {
                     .content("{\"name\": \"apple\", \"description\": \"description\", \"price\": 10 }")
                     .with(user("admin").roles(ADMIN.name())))
                 .andExpect(status().isOk());
-
         verify(itemService).createItem(any(Item.class));
     }
 

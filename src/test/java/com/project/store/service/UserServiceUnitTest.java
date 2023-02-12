@@ -1,9 +1,7 @@
 package com.project.store.service;
 
 import com.project.store.exception.email.EmailIsAlreadyTaken;
-import com.project.store.model.ConfirmationToken;
 import com.project.store.model.User;
-import com.project.store.model.UserRole;
 import com.project.store.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;

@@ -1,5 +1,6 @@
 package com.project.store.model;
 
+import com.project.store.security.UserRole;
 import lombok.*;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -9,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
