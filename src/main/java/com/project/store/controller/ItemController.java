@@ -36,7 +36,7 @@ public class ItemController {
     @PostMapping("/create")
     public Item createItem(@Valid @RequestBody Item item){
         return itemService.createItem(item);
-    }//TODO return created item
+    }
 
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Long id){

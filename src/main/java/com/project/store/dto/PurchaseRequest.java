@@ -13,6 +13,5 @@ public class PurchaseRequest {
     private final String email;
     private final String phone;
     private final String comment;
-
 }
 

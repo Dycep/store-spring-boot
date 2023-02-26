@@ -39,10 +39,9 @@ class RegistrationControllerTest {
 
     @Test
     void shouldConfirmUser() throws Exception {
-        mockMvc.perform(
-                get("/registration/confirm")
-                .param("token", "token")
-        ).andExpect(status().isOk());
+        mockMvc.perform(get("/registration/confirm")
+                .param("token", "token"))
+                .andExpect(status().isOk());
         verify(registrationService).confirmToken("token");
     }
 }

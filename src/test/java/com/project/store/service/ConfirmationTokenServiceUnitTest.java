@@ -43,7 +43,6 @@ class ConfirmationTokenServiceUnitTest {
         token.setToken("token");
         given(confirmationTokenRepository.findByToken(token.getToken()))
                 .willReturn(Optional.of(token));
-
         underTest.getToken(token.getToken());
         verify(confirmationTokenRepository).findByToken("token");
     }

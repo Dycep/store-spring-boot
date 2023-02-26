@@ -27,7 +27,6 @@ class UserServiceUnitTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private ConfirmationTokenService confirmationTokenService;
-
     private UserService underTest;
 
     @BeforeEach

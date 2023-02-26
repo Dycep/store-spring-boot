@@ -29,7 +29,6 @@ class RegistrationServiceUnitTest {
     private ConfirmationTokenService confirmationTokenService;
     @Mock
     private EmailSender emailSender;
-
     private RegistrationService underTest;
 
     @BeforeEach

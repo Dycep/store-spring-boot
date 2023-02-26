@@ -1,6 +1,8 @@
 package com.project.store.model;
 
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

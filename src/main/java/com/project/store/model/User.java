@@ -46,11 +46,7 @@ public class User implements UserDetails {
     private String password;
     private Boolean locked = false;
     private Boolean enabled = false;
-//    @Column(
-//            name = "dob",
-//            nullable = false
-//    )
-//    private LocalDate dob;
+
     @Transient
     private Integer age;
 
@@ -61,17 +57,7 @@ public class User implements UserDetails {
         this.password = password;
         this.userRole = userRole;
         this.phone = phone;
-//        this.dob = dob;
     }
-
-
-//    public Integer getAge() {
-//        return Period.between(this.dob, LocalDate.now()).getYears();
-//    }
-//
-//    public void setAge(Integer age) {
-//        this.age = age;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

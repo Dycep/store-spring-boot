@@ -44,7 +44,6 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$[0].description").value("description"))
                 .andExpect(jsonPath("$[0].price").value(valueOf(1)));
     }
-
     @Test
     void shouldShowItem() throws Exception {
         when(itemService.getItemById(1L))
@@ -57,7 +56,6 @@ class ItemControllerTest {
                 .andExpect(jsonPath("$['description']").value("description"))
                 .andExpect(jsonPath("$['price']").value(valueOf(1)));
     }
-
     @Test
     void shouldUpdateItem() throws Exception {
         Item item = new Item(1L,"name", "description", valueOf(1));
@@ -72,7 +70,6 @@ class ItemControllerTest {
                         .param("description","des")
                         .with(user("admin").roles(ADMIN.name())))
                 .andExpect(status().isOk());
-
         assertEquals(item.getName(),"nam");
         assertEquals(item.getDescription(),"des");
     }
@@ -94,7 +91,6 @@ class ItemControllerTest {
                 .perform(delete("/1")
                     .with(user("admin").roles(ADMIN.name())))
                 .andExpect(status().isOk());
-
         verify(itemService).deleteItemById(1L);
     }
 }
