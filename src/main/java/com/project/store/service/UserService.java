@@ -39,12 +39,9 @@ public class UserService implements UserDetailsService {
         if(userExists){
             throw new EmailIsAlreadyTaken("User with this email exists");
         }
-
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(encodedPassword);
         userRepository.save(user);
-
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -52,11 +49,7 @@ public class UserService implements UserDetailsService {
                 LocalDateTime.now().plusMinutes(15),
                 user
         );
-
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        //TODO : send email
-
+        confirmationTokenService.saveConfirmationToken(confirmationToken);//TODO : send email
         return token;
     }
 

@@ -18,7 +18,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import static com.project.store.security.UserRole.ADMIN;
 import static org.springframework.http.HttpMethod.*;
 
-
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
