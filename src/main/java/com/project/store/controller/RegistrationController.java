@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/registration")
+@CrossOrigin("http://localhost:3000")
 @AllArgsConstructor
 public class RegistrationController {
     private RegistrationService registrationService;
