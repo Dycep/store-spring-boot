@@ -3,6 +3,7 @@ package com.project.store.controller;
 import com.project.store.dto.RegistrationRequest;
 import com.project.store.service.RegistrationService;
 import lombok.AllArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +21,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/confirm")
-    public String confirm(@RequestParam("token") String token) {
+    public String confirm(@NonNull @RequestParam("token") String token) {
         return registrationService.confirmToken(token);
-    }
+    } //TODO exceptions for requests
 }
